@@ -9,9 +9,16 @@ class HomePageInitial extends HomePageState {}
 
 class SearchingState extends HomePageState {}
 
-class SearchedState extends HomePageState {
+class SearchedHasMeaning extends HomePageState {
   final Meanings meaningDetails;
-  SearchedState({required this.meaningDetails});
+  SearchedHasMeaning({required this.meaningDetails});
+  @override
+  List<Object> get props => [meaningDetails];
+}
+
+class SearchedHasNoMeaning extends HomePageState {
+  final NoMeaning meaningDetails;
+  SearchedHasNoMeaning({required this.meaningDetails});
   @override
   List<Object> get props => [meaningDetails];
 }

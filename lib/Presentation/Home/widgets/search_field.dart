@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchField extends StatelessWidget {
-  SearchField({
+  const SearchField({
     super.key,
   });
 
@@ -14,6 +14,8 @@ class SearchField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0, left: 10, right: 10),
       child: TextField(
+        maxLines: 1,
+        textCapitalization: TextCapitalization.words,
         onSubmitted: (word) {
           context.read<HomePageBloc>().add(StartSearching(word: word));
         },

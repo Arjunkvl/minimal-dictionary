@@ -11,13 +11,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: [
+            const SearchField(),
             const SizedBox(
-              height: 200,
+              height: 50,
             ),
-            SearchField(),
             BlocBuilder<HomePageBloc, HomePageState>(builder: (context, state) {
               if (state is HomePageInitial) {
                 return Container();
@@ -28,29 +29,71 @@ class HomePage extends StatelessWidget {
                   child: Center(child: CircularProgressIndicator()),
                 );
               }
-              if (state is SearchedState) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 70.0, left: 30),
-                      child: Text(
-                        state.meaningDetails.word!,
-                        style: materialthemeheadlinesmall(Colors.black),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: 30.0, left: 60, right: 30, bottom: 30),
-                      child: Flexible(
+              if (state is SearchedHasMeaning) {
+                return Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30),
                         child: Text(
-                          state.meaningDetails.meanings![0].definitions![0]
-                              .definition!,
-                          style: materialthemebodymedium(Colors.black),
+                          'Meanings',
+                          style: materialthemeheadlinesmall(Colors.black),
                         ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          physics: const ScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: state
+                              .meaningDetails.meanings![0].definitions!.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 60, right: 30, bottom: 15),
+                              child: Text(
+                                "• ${state.meaningDetails.meanings![0].definitions![index].definition!}",
+                                style: materialthemebodylarge(Colors.black),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      )
+                    ],
+                  ),
+                );
+              }
+              if (state is SearchedHasNoMeaning) {
+                return Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 30, right: 30),
+                          child: Text(
+                            state.meaningDetails.message!,
+                            style: materialthemebodylarge(Colors.black),
+                          ),
+                        ),
+                      ),
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 30, right: 30),
+                          child: Text(
+                            'Only one word at a time!!',
+                            style: materialthemebodylarge(Colors.red),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               } else {
                 return const Center(
