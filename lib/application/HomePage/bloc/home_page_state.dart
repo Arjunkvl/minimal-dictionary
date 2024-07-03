@@ -22,3 +22,8 @@ class SearchedHasNoMeaning extends HomePageState {
   @override
   List<Object> get props => [meaningDetails];
 }
+
+class ApiResultNoneState extends HomePageState {
+  @override
+  List<Object> get props => [];
+}

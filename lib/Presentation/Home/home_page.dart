@@ -1,12 +1,24 @@
 import 'package:dictionary/Presentation/Home/widgets/search_field.dart';
 import 'package:dictionary/Presentation/core/text_styles.dart';
 import 'package:dictionary/application/HomePage/bloc/home_page_bloc.dart';
+import 'package:dictionary/application/dependency/injection.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    setUpLocator();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +39,21 @@ class HomePage extends StatelessWidget {
                 return const Padding(
                   padding: EdgeInsets.only(top: 150.0),
                   child: Center(child: CircularProgressIndicator()),
+                );
+              }
+              if (state is ApiResultNoneState) {
+                return const Column(
+                  children: [
+                    SizedBox(
+                      height: 200,
+                    ),
+                    const Center(
+                      child: Text(
+                        'No Internet',
+                        style: TextStyle(fontSize: 40),
+                      ),
+                    ),
+                  ],
                 );
               }
               if (state is SearchedHasMeaning) {
