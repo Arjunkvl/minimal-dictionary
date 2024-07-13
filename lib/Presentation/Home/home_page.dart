@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       height: 200,
                     ),
-                    const Center(
+                    Center(
                       child: Text(
                         'No Internet',
                         style: TextStyle(fontSize: 40),
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 30),
                         child: Text(
-                          'Meanings',
+                          'Meanings of ${state.meaningDetails.word}',
                           style: materialthemeheadlinesmall(Colors.black),
                         ),
                       ),

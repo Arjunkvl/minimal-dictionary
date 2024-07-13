@@ -1,3 +1,4 @@
+import 'package:dictionary/Presentation/core/controllers/controllers.dart';
 import 'package:dictionary/Presentation/core/text_styles.dart';
 import 'package:dictionary/application/HomePage/bloc/home_page_bloc.dart';
 
@@ -14,10 +15,12 @@ class SearchField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0, left: 10, right: 10),
       child: TextField(
+        controller: field,
         maxLines: 1,
         textCapitalization: TextCapitalization.words,
         onSubmitted: (word) {
           context.read<HomePageBloc>().add(StartSearching(word: word));
+          field.clear();
         },
         style: const TextStyle(color: Colors.white),
         cursorColor: Colors.white,
